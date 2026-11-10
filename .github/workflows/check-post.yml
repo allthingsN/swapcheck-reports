@@ -3,6 +3,9 @@ name: check-post
 on:
   pull_request:
     paths: ["posts/**", "drafts/**", "suite/**", "tools/**", "test/**"]
+  push:
+    branches: [main]
+    paths: ["posts/**", "drafts/**", "suite/**", "tools/**", "test/**"]
 
 permissions:
   contents: read

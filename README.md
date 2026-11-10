@@ -2,6 +2,8 @@
 
 Open workloads and publishing tools for Swapcheck reports and change notices. We build Swapcheck; this repository is how we publish what it measures, and how anyone can check that a post says only what its data says.
 
+Related: the [Swapcheck CLI and Action](https://github.com/allthingsN/swapcheck), the signed [model-change registry](https://github.com/allthingsN/swapcheck-registry) the notices are generated from, and the [published reports](https://allthingsn.github.io/swapcheck/reports.html).
+
 ## Layout
 
 | Path | What it is |
