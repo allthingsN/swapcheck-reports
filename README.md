@@ -28,7 +28,7 @@ Open workloads and publishing tools for Swapcheck reports and change notices. We
 Run it with Swapcheck:
 
 ```sh
-npx swapcheck test --to <candidate>
+npx @allthingsai/swapcheck test --to <candidate>
 ```
 
 Set `cases` to `suite` in `swapcheck.yaml`, or copy the files into `swapcheck/cases/`.

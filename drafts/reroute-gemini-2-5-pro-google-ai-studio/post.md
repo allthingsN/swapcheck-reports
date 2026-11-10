@@ -30,10 +30,10 @@ The same model has its own schedule elsewhere:
 
 ## What to do
 
-- Find every place your code uses it: `npx swapcheck scan`.
-- See replacement options that fit your requirements: `npx swapcheck find gemini-2.5-pro`.
-- Before the date, measure the replacement on your own cases: `npx swapcheck test --to gemini-3.8-flash`.
-- Keep watching for changes in CI: `npx swapcheck watch`.
+- Find every place your code uses it: `npx @allthingsai/swapcheck scan`.
+- See replacement options that fit your requirements: `npx @allthingsai/swapcheck find gemini-2.5-pro`.
+- Before the date, measure the replacement on your own cases: `npx @allthingsai/swapcheck test --to gemini-3.8-flash`.
+- Keep watching for changes in CI: `npx @allthingsai/swapcheck watch`.
 
 ## Measured
 
