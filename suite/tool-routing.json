@@ -1,0 +1,935 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "route-order-details",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "What's in order A-10293 and how much was it?"
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-tracking",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "Where is my parcel? Tracking number 1Z999AA10123456784."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-refund-damaged",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "Order A-55120 arrived with a cracked screen. I want a refund please."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-status-not-refund",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "Order A-55120 hasn't arrived yet, can you check on it?"
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-human-requested",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "This is the third time I'm writing. I want to talk to a person, not a bot."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-greeting-no-tool",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "Hi! Just wanted to say thanks, the package came early."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-policy-question-no-tool",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "Do you ship to Iceland? I haven't ordered anything yet."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    },
+    {
+      "id": "route-refund-wrong-item",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a support assistant for an online store. Use a tool when one fits the request; otherwise answer briefly. Never refund unless the customer asks for a refund."
+        },
+        {
+          "role": "user",
+          "content": "You sent me blue sneakers instead of the red ones in order A-77004. Refund it, I don't want a replacement."
+        }
+      ],
+      "tools": [
+        {
+          "name": "lookup_order",
+          "description": "Look up an order's items, total and status by its order ID.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "get_shipping_status",
+          "description": "Get the carrier status for a shipment by its tracking number.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "tracking_number"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "tracking_number": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "name": "refund_order",
+          "description": "Issue a refund for an order. Only use when the customer explicitly asks for a refund.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "order_id",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "order_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "damaged",
+                  "not_received",
+                  "wrong_item",
+                  "other"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "description": "Hand the conversation to a human agent with a short summary.",
+          "parameters": {
+            "type": "object",
+            "required": [
+              "summary"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "summary": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      ],
+      "max_tokens": 300,
+      "checks": [
+        {
+          "type": "tool_called",
+          "name": "refund_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "lookup_order"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "get_shipping_status"
+        },
+        {
+          "type": "tool_not_called",
+          "name": "escalate_to_human"
+        },
+        {
+          "type": "tool_args_valid"
+        }
+      ],
+      "tags": [
+        "tool-routing"
+      ]
+    }
+  ]
+}

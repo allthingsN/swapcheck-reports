@@ -1,0 +1,39 @@
+name: release-bundle
+
+on:
+  push:
+    branches: [main]
+    paths: ["posts/**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-bundle
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+      - run: npm test
+      - name: Find the posts changed by this push
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: node tools/changed-posts.ts "$BEFORE" "$AFTER" > "$RUNNER_TEMP/posts.txt"
+      - name: Check, sign and attach each post as release assets
+        env:
+          REGISTRY_SIGNING_KEY_PEM: ${{ secrets.REGISTRY_SIGNING_KEY_PEM }}
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/bundle.ts --release "$RUNNER_TEMP/posts.txt" --out "$RUNNER_TEMP/release"

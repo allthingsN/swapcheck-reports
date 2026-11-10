@@ -1,0 +1,12 @@
+{
+  "title": "claude-sonnet-4-5-20250929 retires on 2026-11-30, replaced by claude-sonnet-5-5",
+  "slug": "retirement-claude-sonnet-4-5-20250929-anthropic-api",
+  "excerpt": "claude-sonnet-4-5-20250929 retires on the Claude API on 2026-11-30. The source is Anthropic's own page, and nothing in this notice was measured.",
+  "tag": "anthropic",
+  "type": "notice",
+  "date": "2026-11-10",
+  "registry_events": [
+    "anthropic-api.retirement.claude-sonnet-4-5-20250929"
+  ],
+  "draft": true
+}

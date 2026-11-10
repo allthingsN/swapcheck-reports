@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "classify-double-charge",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "I was charged twice for the March subscription. Can you refund one of them?"
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "billing"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-crash-on-export",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Every time I export a report to CSV the app closes. Started after yesterday's update."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "bug"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-dark-mode",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Would love a dark mode for the dashboard, it's hard on the eyes at night."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "feature_request"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-locked-out",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "I reset my password but the login page still says my account is locked."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "account_access"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-end-plan",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Please close my account at the end of this billing period. We're moving to another tool."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "cancellation"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-mixed-billing-not-bug",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "The invoice PDF shows the old company name. The amount is right, I just need the billing name corrected."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "billing"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-polite-angry-bug",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Thanks for the great product! Unfortunately the search box returns no results for any query since this morning."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "bug"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    },
+    {
+      "id": "classify-sso-request-vs-access",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Classify the customer message into exactly one label: billing, bug, feature_request, account_access, cancellation. Reply with the label only, in lowercase, with no punctuation or explanation."
+        },
+        {
+          "role": "user",
+          "content": "Our admin can't sign in with SSO today, it loops back to the login screen."
+        }
+      ],
+      "max_tokens": 10,
+      "checks": [
+        {
+          "type": "label_in",
+          "labels": [
+            "account_access"
+          ]
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 10
+        }
+      ],
+      "tags": [
+        "classification"
+      ]
+    }
+  ]
+}

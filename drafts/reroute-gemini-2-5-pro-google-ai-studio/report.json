@@ -1,0 +1,111 @@
+{
+  "schema": "swapcheck.notice/v1",
+  "swapcheck_version": "0.1.0",
+  "date": "2026-11-10",
+  "runs": 0,
+  "registry": {
+    "url": "https://allthingsn.github.io/swapcheck-registry/snapshot.json",
+    "generated_at": "2026-11-10T18:10:33.335Z"
+  },
+  "event": {
+    "id": "google-ai-studio.reroute.gemini-2.5-pro",
+    "type": "reroute",
+    "provider": "google",
+    "route": "google-ai-studio",
+    "model": "gemini-2.5-pro",
+    "to": "gemini-3.8-flash",
+    "effective": "2026-12-01",
+    "date_precision": "exact",
+    "billing": "replacement_rates",
+    "successor_basis": "provider_named",
+    "notes": "Requests route to the replacement automatically on this date; the provider states it in a dated notice, which is more specific than the page's general earliest-possible note for shutdown dates.",
+    "source": "https://aistudio.google.com/docs/deprecations",
+    "confidence": "high",
+    "first_seen": "2026-11-10",
+    "last_verified": "2026-11-10"
+  },
+  "models": {
+    "from": {
+      "id": "gemini-2.5-pro",
+      "provider": "google",
+      "route": "google-ai-studio",
+      "name": "Gemini 2.5 Pro",
+      "family": "gemini-pro",
+      "release_date": "2025-06-17",
+      "status": "deprecated",
+      "capabilities": {
+        "tools": true,
+        "structured_output": true,
+        "reasoning": true,
+        "vision": true,
+        "audio": true,
+        "pdf": true
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "cost": {
+        "input": 1.25,
+        "output": 10
+      },
+      "open_weights": false,
+      "source": "https://models.dev/api.json"
+    },
+    "to": {
+      "id": "gemini-3.8-flash",
+      "provider": "google",
+      "route": "google-ai-studio",
+      "name": "Gemini 3.8 Flash",
+      "family": "gemini-flash",
+      "release_date": "2026-09-02",
+      "status": "active",
+      "capabilities": {
+        "tools": true,
+        "structured_output": true,
+        "reasoning": true,
+        "vision": true,
+        "audio": true,
+        "pdf": true
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "cost": {
+        "input": 0.75,
+        "output": 3.75
+      },
+      "open_weights": false,
+      "source": "https://models.dev/api.json"
+    }
+  },
+  "price_change": {
+    "input_pct": -40,
+    "output_pct": -62.5
+  },
+  "related_events": [
+    {
+      "id": "google-vertex.retirement.gemini-2.5-pro",
+      "type": "retirement",
+      "provider": "google",
+      "route": "google-vertex",
+      "model": "gemini-2.5-pro",
+      "to": "gemini-3.8-flash",
+      "effective": "2026-10-20",
+      "date_precision": "earliest_possible",
+      "successor_basis": "provider_named",
+      "notes": "The provider also names: gemini-3.5-flash.",
+      "source": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/model-versions",
+      "confidence": "high",
+      "first_seen": "2026-11-10",
+      "last_verified": "2026-11-10"
+    }
+  ],
+  "limits": [
+    "This notice restates registry data as of 2026-11-10. The registry last confirmed the source page on 2026-11-10; providers can change dates.",
+    "No model was called for this notice. It does not measure whether the replacement handles your prompts the same way.",
+    "Prices come from models.dev through the registry, not from the provider's pricing page, and exclude caching, batch and long-context tiers.",
+    "Other platforms keep their own schedules; the dates listed for them are separate events."
+  ]
+}

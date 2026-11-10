@@ -1,0 +1,313 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "codefix-off-by-one-range",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "This Python function should return the sum of the first n items but skips the last one:\n```python\ndef sum_first(items, n):\n    total = 0\n    for i in range(n - 1):\n        total += items[i]\n    return total\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "range\\(\\s*n\\s*\\)"
+        },
+        {
+          "type": "not_contains",
+          "text": "range(n - 1)"
+        },
+        {
+          "type": "contains",
+          "text": "def sum_first(items, n)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-js-strict-equality",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "In JavaScript, isAdmin('0') returns true but should be false. Fix it:\n```js\nfunction isAdmin(role) {\n  return role == 0;\n}\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "===\\s*0\\b"
+        },
+        {
+          "type": "not_contains",
+          "text": "role == 0"
+        },
+        {
+          "type": "contains",
+          "text": "function isAdmin(role)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-mutable-default",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "Each call to add_tag leaks tags from earlier calls. Fix it:\n```python\ndef add_tag(tag, tags=[]):\n    tags.append(tag)\n    return tags\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "tags\\s*=\\s*None"
+        },
+        {
+          "type": "regex",
+          "pattern": "if\\s+tags\\s+is\\s+None"
+        },
+        {
+          "type": "contains",
+          "text": "def add_tag(tag, tags"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-missing-await",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "loadUser returns a Promise instead of the user's name. Fix it:\n```js\nasync function loadUser(id) {\n  const res = fetchUser(id);\n  return res.name;\n}\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "await\\s+fetchUser\\(\\s*id\\s*\\)"
+        },
+        {
+          "type": "contains",
+          "text": "async function loadUser(id)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-integer-division",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "average([1, 2]) returns 1 instead of 1.5 in this Python 3 code. Fix it:\n```python\ndef average(xs):\n    return sum(xs) // len(xs)\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "sum\\(xs\\)\\s*/\\s*len\\(xs\\)"
+        },
+        {
+          "type": "not_contains",
+          "text": "//"
+        },
+        {
+          "type": "contains",
+          "text": "def average(xs)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-wrong-comparison-sort",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "sortDesc should sort numbers from largest to smallest but sorts them as strings ascending:\n```js\nfunction sortDesc(nums) {\n  return nums.sort();\n}\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "\\(\\s*a\\s*,\\s*b\\s*\\)\\s*=>\\s*b\\s*-\\s*a"
+        },
+        {
+          "type": "contains",
+          "text": "function sortDesc(nums)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-unclosed-file",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "count_lines leaves the file open. Fix it without changing behavior:\n```python\ndef count_lines(path):\n    f = open(path)\n    return len(f.readlines())\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "with\\s+open\\(\\s*path"
+        },
+        {
+          "type": "contains",
+          "text": "def count_lines(path)"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    },
+    {
+      "id": "codefix-inclusive-bound",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Fix the bug described by the user. Reply with only the corrected function in a single fenced code block. Keep the function name and signature unchanged."
+        },
+        {
+          "role": "user",
+          "content": "inRange(10, 1, 10) returns false but the upper bound should be inclusive:\n```ts\nfunction inRange(x: number, lo: number, hi: number): boolean {\n  return x >= lo && x < hi;\n}\n```"
+        }
+      ],
+      "max_tokens": 400,
+      "checks": [
+        {
+          "type": "regex",
+          "pattern": "x\\s*<=\\s*hi"
+        },
+        {
+          "type": "not_contains",
+          "text": "x < hi"
+        },
+        {
+          "type": "contains",
+          "text": "function inRange(x: number, lo: number, hi: number): boolean"
+        },
+        {
+          "type": "regex",
+          "pattern": "```"
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "code-fix"
+      ]
+    }
+  ]
+}

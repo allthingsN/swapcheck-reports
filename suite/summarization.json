@@ -1,0 +1,454 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "summarize-incident",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Incident report: On 4 May the checkout service at Fernhill Retail returned errors for 47 minutes. Root cause was an expired TLS certificate on the payments gateway. Priya Nandakumar renewed it and added an expiry alert. About 1,900 orders failed and were retried successfully the same day."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "47 minutes",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "TLS certificate",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "1,900",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "database",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "data loss",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-meeting",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Weekly sync, Juniper Robotics. Marco confirmed the gripper prototype ships to the pilot customer on 12 June. Budget for Q3 testing was approved at $38,000. Open question: whether to hire a second firmware engineer; Lena will bring two candidates next week."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "12 June",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "$38,000",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "Lena",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "approved the hire",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "fired",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-earnings-style",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Cobalt Lane Coffee reported quarterly revenue of $4.2 million, up 9% from last year. Wholesale grew fastest at 22%, while café sales were flat. The company opened 3 new locations and expects to open 5 more next year."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "$4.2 million",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "9%",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "22%",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "loss",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "declined",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-policy-change",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Starting 1 September, Pinecrest Health staff must use the new expense portal for all claims. Paper forms will be rejected after 30 September. Claims above $500 now need a manager's approval in the portal before submission."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "1 September",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "30 September",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "$500",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "optional",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-customer-call",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Call notes, Halvard Logistics: the customer reports 14 late deliveries in October, mostly on the Rotterdam route. They want a credit and a weekly status email. Account owner Sam Okafor agreed to send the first report on Friday and to review the credit with finance."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "14 late deliveries",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "Rotterdam",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "Sam Okafor",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "refund was issued",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "cancelled the contract",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-research-abstract",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "In a 12-week trial with 240 volunteers, a daily 20-minute walk lowered average resting heart rate by 4 beats per minute compared with the control group. The effect was larger in participants over 60. Authors note the study was not blinded."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "240",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "4 beats per minute",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "not blinded",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "cure",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "proves",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-release-notes",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Version 3.2 of the Wrenfield mobile app adds offline mode for saved lists, fixes a crash when rotating the tablet layout, and drops support for Android 9. The release rolls out to 10% of users first, then everyone after 7 days if crash rates stay flat."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "offline",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "Android 9",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "10%",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "iOS 15",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    },
+    {
+      "id": "summarize-long-thread",
+      "origin": "team",
+      "accepted": true,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summarize the text for a busy manager in at most three short bullet points starting with '- '. Keep every number and name exactly as written. Do not add facts."
+        },
+        {
+          "role": "user",
+          "content": "Thread summary needed. Ada: the vendor contract with Northgate Print renews on 31 January at £18,500. Ben: the price went up 6% from last year. Ada: legal wants a 60-day termination clause added. Ben: procurement can get two competing quotes by mid-January. Decision pending until quotes arrive."
+        }
+      ],
+      "max_tokens": 200,
+      "checks": [
+        {
+          "type": "contains",
+          "text": "31 January",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "£18,500",
+          "ignore_case": true
+        },
+        {
+          "type": "contains",
+          "text": "60-day",
+          "ignore_case": true
+        },
+        {
+          "type": "not_contains",
+          "text": "signed the renewal",
+          "ignore_case": true
+        },
+        {
+          "type": "regex",
+          "pattern": "^- ",
+          "flags": "m"
+        },
+        {
+          "type": "max_tokens_output",
+          "max": 160
+        },
+        {
+          "type": "no_refusal"
+        }
+      ],
+      "tags": [
+        "summarization"
+      ]
+    }
+  ]
+}
