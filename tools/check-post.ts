@@ -9,6 +9,11 @@ import { createPublicKey, verify } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join } from "node:path";
 
+/** Every character with a meaning in a regular expression, escaped. */
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export const POST_TYPES = ["notice", "swap", "fit", "monthly"] as const;
 const REQUIRED_FILES = ["post.md", "report.json", "hero.png", "meta.json"];
 const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -123,7 +128,8 @@ export function checkPost(dir: string, registry?: Registry): string[] {
 
   const version = typeof report.swapcheck_version === "string" ? report.swapcheck_version : null;
   if (!version) problems.push("report.json needs swapcheck_version.");
-  else if (!new RegExp(`Swapcheck v?${version.replace(/\./g, "\\.")}\\b`).test(md)) problems.push(`the post must state the version as "Swapcheck ${version}".`);
+  else if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(version)) problems.push(`report.json swapcheck_version must look like 0.1.3, not ${JSON.stringify(version)}.`);
+  else if (!new RegExp(`Swapcheck v?${escapeRegExp(version)}\\b`).test(md)) problems.push(`the post must state the version as "Swapcheck ${version}".`);
 
   const runs = typeof report.runs === "number" ? report.runs : typeof report.runs_per_case === "number" ? report.runs_per_case : null;
   if (runs === null) problems.push("report.json needs runs or runs_per_case.");

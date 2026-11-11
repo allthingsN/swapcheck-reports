@@ -108,6 +108,13 @@ test("check-post requires version, run count, date, limits, raw-report link and 
   for (const needle of ["version", "run count", "Limits", "raw report", "disclose"]) assert.match(problems, new RegExp(needle), needle);
 });
 
+test("check-post rejects a version that is not a plain version number", () => {
+  const dir = tempNotice(SONNET);
+  const report = JSON.parse(readFileSync(join(dir, "report.json"), "utf8"));
+  writeFileSync(join(dir, "report.json"), JSON.stringify({ ...report, swapcheck_version: "0.1.(0|.*)" }));
+  assert.match(checkPost(dir).join("\n"), /swapcheck_version must look like 0\.1\.3/);
+});
+
 test("check-post validates meta.json and the hero image", () => {
   const dir = tempNotice(SONNET);
   const meta = JSON.parse(readFileSync(join(dir, "meta.json"), "utf8"));
